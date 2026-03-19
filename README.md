@@ -97,5 +97,7 @@ text_extrude.scad
 
 ## Development
 
-Please fork from at https://github.com/brodykenrick/text_on_OpenSCAD and fix any bugs or add any features and send a pull request.
+This repo was forked from https://github.com/brodykenrick/text_on_OpenSCAD because it hasn't been updated recently.
+
+Please fork from https://github.com/pneumaticdeath/text_on_OpenSCAD and fix any bugs or add any features and send a pull request.
 
