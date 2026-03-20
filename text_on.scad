@@ -25,6 +25,7 @@ All modules also take the additional arguments:
 extrusion_height = depth of the letter, i.e. how far it sits proud
 rotate
 center //center the text at the location it is being written (NOT that the object is centered)
+roof Use roof instead of linear_extrude
 
 ALL faux-objects that the text is applied to have center=true
 TODO: object_center=true/false (already done for cylinder)
@@ -58,6 +59,7 @@ default_center = true; //Text-centering
 default_scale = [1,1,1];
 default_extrusion_height = 2; //mm letter extrusion height
 default_buffer_width = 0; //mm of buffer (thickening in all directions) to add to each letter
+default_roof = false;
 
 //Defaults for Cube
 default_cube_face = "front"; // default face (top,bottom,left,right,back,front)
@@ -172,7 +174,8 @@ module text_on_cylinder(t = default_t,
                         valign = undef,
                         language = undef,
                         script = undef,
-                        spacing = default_spacing) {
+                        spacing = default_spacing,
+                        roof = default_roof) {
 
 //    echo (str("text_on_cylinder:There are " ,len(t) ," letters in t" , t));
 //    echo (str("text_on_cylinder:","h" , h));
@@ -205,7 +208,8 @@ module text_on_cylinder(t = default_t,
                 rotate = rotate,
                 eastwest = eastwest,
                 middle = middle,
-                ccw = ccw);
+                ccw = ccw,
+                roof = roof);
     } else {
         if((middle != undef) && (middle != default_circle_middle)) {
             //TODO: Which others?
@@ -238,7 +242,8 @@ module text_on_cylinder(t = default_t,
                 rotate = rotate,
                 face = face,
                 updown = updown,
-                eastwest = eastwest);
+                eastwest = eastwest,
+                roof = roof);
     }
 }
 
@@ -265,7 +270,8 @@ module text_on_circle(t = default_t,
                       language = undef,
                       script = undef,
                       spacing = default_spacing,
-                      buffer_width = default_buffer_width) {
+                      buffer_width = default_buffer_width,
+                      roof = default_roof) {
 //    echo (str("text_on_circle:","There are " ,len(t) ," letters in t" , t));
 //    echo (str("text_on_circle:","rotate=" , rotate));
 //    echo (str("text_on_circle:","eastwest=" , eastwest));
@@ -305,7 +311,8 @@ module text_on_circle(t = default_t,
                 halign = halign,
                 valign = valign,
                 extrusion_height = extrusion_height,
-                buffer_width = buffer_width);
+                buffer_width = buffer_width,
+                roof =roof);
     }
 }
 
@@ -338,7 +345,8 @@ module __internal_text_on_cylinder_side(t = default_t,
                       language = undef,
                       script = undef,
                       spacing = default_spacing,
-                      buffer_width = default_buffer_width) {
+                      buffer_width = default_buffer_width,
+                      roof = default_roof) {
 //    echo (str("__internal_text_on_cylinder_side:There are " ,len(t) ," letters in t" , t));
 //    echo (str("__internal_text_on_cylinder_side:","h=" , h));
 //    echo (str("__internal_text_on_cylinder_side:","r=" , r));
@@ -434,7 +442,8 @@ module __internal_text_on_cylinder_side(t = default_t,
                     halign = "center", //This can be relaxed eventually
                     valign = "baseline", //Need this to keep all letters on the same line (could also support top -- otherw will make
                     extrusion_height = extrusion_height,
-                    buffer_width = buffer_width);
+                    buffer_width = buffer_width,
+                    roof = roof);
         }
     }
 }
@@ -463,7 +472,8 @@ module text_on_sphere(t = default_t,
                       valign = undef, //Not supported - only here to enable a warning
                       language = undef,
                       script = undef,
-                      spacing = default_spacing) {
+                      spacing = default_spacing,
+                      roof = default_roof) {
     //echo ("text_on_sphere:There are " ,len(t) ," letters in t" , t);
 
     if((halign != undef) || (halign != undef)) {
@@ -502,7 +512,8 @@ module text_on_sphere(t = default_t,
                         script = script,
                         halign = halign,
                         valign = valign,
-                        extrusion_height = extrusion_height);
+                        extrusion_height = extrusion_height,
+                        roof = roof);
             } else {
                 //If rounding then clip the text inside an inner sphere and outer sphere
                 intersection() {
@@ -519,7 +530,8 @@ module text_on_sphere(t = default_t,
                             script = script,
                             halign = halign,
                             valign = valign,
-                            extrusion_height = extrusion_height * 2); //Make it proud to clip it off.
+                            extrusion_height = extrusion_height * 2,
+                            roof = roof); //Make it proud to clip it off.
                     //Shell - bounding inner and outer
                     difference() { //rounded outside
                         sphere(rr + extrusion_height);
@@ -551,7 +563,8 @@ module __internal_text_on_sphere_helper(t = default_t,
                       language = undef,
                       script = undef,
                       spacing = default_spacing,
-                      buffer_width = default_buffer_width) {
+                      buffer_width = default_buffer_width,
+                      roof = default_roof) {
     rtl_sign = (direction == "rtl") ? -1 : 1;
     ttb_btt_inaction = (direction == "ttb" || direction == "btt") ? 0 : 1;
     ttb_btt_action = (direction == "ttb" || direction == "btt") ? 1 : 0;
@@ -586,7 +599,8 @@ module __internal_text_on_sphere_helper(t = default_t,
                 halign = "center", //This can be relaxed eventually
                 valign = "baseline", //Need this to keep all letters on the same line (could also support top -- otherw will make wonky letters)
                 extrusion_height = extrusion_height,
-                buffer_width = buffer_width);
+                buffer_width = buffer_width,
+                roof = roof);
     }
 }
 
@@ -617,7 +631,8 @@ module text_on_cube(  t = default_t,
                       language = undef,
                       script = undef,
                       spacing = default_spacing,
-                      buffer_width = default_buffer_width) {
+                      buffer_width = default_buffer_width,
+                      roof = default_roof) {
     //echo (str("text_on_cube:","There are " ,len(t) ," letters in t" , t));
     //echo (str("text_on_cube:","cube_size" , cube_size));
     
@@ -653,7 +668,8 @@ module text_on_cube(  t = default_t,
             halign = halign,
             valign = valign,
             extrusion_height = extrusion_height,
-            buffer_width = buffer_width );
+            buffer_width = buffer_width,
+            roof = roof);
 }
 
 function default_if_undef(val, default_val) = (val != undef) ? val : default_val;
@@ -675,7 +691,8 @@ module text_extrude( t = default_t,
                      language = undef,
                      script = undef,
                      spacing = default_spacing,
-                     buffer_width = default_buffer_width) {
+                     buffer_width = default_buffer_width,
+                     roof = default_roof) {
     //echo (str("text_extrude:","There are " ,len(t) ," letters in text" , t));
     //echo (str("text_extrude:","extrusion_height=" , extrusion_height));
     
@@ -701,17 +718,32 @@ module text_extrude( t = default_t,
     
     scale(scale)
     rotate(rotate, [0, 0, -1]) //TODO: Do we want to make this so that the entire vector can be set?
-    linear_extrude(height = extrusion_height, convexity = 10, center = extrusion_center)
-    offset(delta = buffer_width)
-    text(text = t,
-            size = size,
-            $fn = 40,
-            font = font,
-            direction = direction,
-            spacing = spacing,
-            halign = halign,
-            valign = valign,
-            language = language,
-            script = script);
-}
+    if (!roof) {
+        linear_extrude(height = extrusion_height, convexity = 10, center = extrusion_center)
+        offset(delta = buffer_width)
+        text(text = t,
+                size = size,
+                $fn = 40,
+                font = font,
+                direction = direction,
+                spacing = spacing,
+                halign = halign,
+                valign = valign,
+                language = language,
+                script = script);
+    } else {
+        roof(convexity = 10)
+        offset(delta = buffer_width)
+        text(text = t,
+                size = size,
+                $fn = 40,
+                font = font,
+                direction = direction,
+                spacing = spacing,
+                halign = halign,
+                valign = valign,
+                language = language,
+                script = script);
 
+    }
+}

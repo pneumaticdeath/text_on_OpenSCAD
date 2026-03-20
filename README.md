@@ -46,6 +46,7 @@ They also expose the arguments of the text() primitive:
 * script
 * halign -- left, right or center
 * valign -- baseline, bottom, top or center
+* roof -- use roof extrude instead of linear extrude
 
 And additional arguments:
 * extrusion_height //i.e. how far it sits proud
