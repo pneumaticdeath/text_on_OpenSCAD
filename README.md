@@ -6,7 +6,7 @@ larger been [made obsolete by the BOSL2 library](https://github.com/BelfrySCAD/B
 the size and complexity of that library, or prefer the simpler method calls of this library, I will keep text_on_OpenSCAD maintained for the time being.
 
 Only works with OpenSCAD v 2014.xx and later -- where text() module is added and unicode text is supported.
-[Deveopment releases](https://openscad.org/downloads.html#snapshots) of OpenSCAD 2022.x.x or later allows for proportional font support.  My testing
+[Deveopment releases](https://openscad.org/downloads.html#snapshots) of OpenSCAD 2022.x.x or later allow for proportional font support.  My testing
 has been done with OpenSCAD 2026.02.04 on MacOS 26.x on an Apple silicon chip.
 
 ## History 
